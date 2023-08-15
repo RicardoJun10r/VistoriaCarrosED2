@@ -30,7 +30,8 @@ public class VeiculoService extends UnicastRemoteObject implements IServer {
     public String remover(String renavam){
 
         try {
-            this.avlTree.remove(hashRenavam(renavam));
+            int chave = hashRenavam(renavam);
+            this.avlTree.remove(chave);
             return "Removido [ " + renavam + " ]";
         } catch (ArvoreVazia e) {
             e.printStackTrace();
