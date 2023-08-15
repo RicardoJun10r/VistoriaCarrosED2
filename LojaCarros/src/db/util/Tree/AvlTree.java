@@ -93,11 +93,11 @@ public class AvlTree<T> {
 
     public void atualizarValor(T novoValor, Integer chave){
         if(isEmpty()) throw new ArvoreVazia("Árvore vazia!");
-        this.raiz = atualizarValor(raiz, novoValor, chave);
+        atualizarValor(raiz, novoValor, chave);
     }
 
     private No<T> atualizarValor(No<T> folha, T novoValor, Integer chave){
-        if(folha == null) return null;
+        if(folha == null) throw new VeiculoNaoEncontrado("Error: não é possível remover, veículo não encontrado!");
         else if(chave > folha.getChave()) return atualizarValor(folha.getDir(), novoValor, chave);
         else if(chave < folha.getChave()) return atualizarValor(folha.getEsq(), novoValor, chave);
         else {
