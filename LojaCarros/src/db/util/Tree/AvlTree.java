@@ -19,55 +19,6 @@ public class AvlTree<T> {
         this.size = 0;
     }
 
-    public void inserir(T valor, Integer chave){
-        this.raiz = inserir(raiz, valor, chave);
-        this.size++;
-    }
-
-    private No<T> inserir(No<T> folha, T valor, Integer chave){
-
-        if(folha == null) return folha = new No<>(valor, chave);
-        else if(chave > folha.getChave()) folha.setDir(inserir(folha.getDir(), valor, chave));
-        else if(chave < folha.getChave()) folha.setEsq(inserir(folha.getEsq(), valor, chave));
-        else return folha;
-        calcularFB(folha);
-        calcularFB(folha.getEsq());
-        calcularFB(folha.getDir());
-
-        int fb = obterFB(folha);
-        int fbSubEsq = obterFB(folha.getEsq());
-        int fbSubDir = obterFB(folha.getDir());
-
-        // Rotação Simples a esquerda
-        if(fb < -1 && fbSubDir <= 0){
-            System.out.println("Rotação Simples a esquerda");
-            return rotacaoEsquerdaSimples(folha);
-        }
-
-        // Rotação Simples a direita
-        if(fb > 1 && fbSubEsq >= 0){
-            System.out.println("Rotação Simples a direita");
-            return rotacaoDireitaSimples(folha);
-        }
-
-        // Rotação Dupla a esquerda
-        if(fb < -1 && fbSubDir > 0){
-            System.out.println("Rotação Dupla a esquerda");
-            folha.setDir(rotacaoDireitaSimples(folha.getDir()));
-            return rotacaoEsquerdaSimples(folha);
-        }
-
-        // Rotação Dupla a direita
-        if(fb > 1 && fbSubEsq < 0){
-            System.out.println("Rotação Dupla a direita");
-            folha.setEsq(rotacaoEsquerdaSimples(folha.getEsq()));
-            return rotacaoDireitaSimples(folha);
-        }
-
-        return folha;
-
-    }
-
     public void insert(T valor, Integer chave){
         if(isEmpty()) this.raiz = new No<>(valor, chave);
         this.raiz = insert(raiz, valor, chave);
@@ -207,7 +158,7 @@ public class AvlTree<T> {
     }
 
     private Integer altura(No<T> folha){
-        if(folha == null) return -1;
+        if(folha == null) return 0;
         else if(altura(folha.getEsq()) > altura(folha.getDir())) return 1 + altura(folha.getEsq());
         else return 1 + altura(folha.getDir());
     }
@@ -274,12 +225,6 @@ public class AvlTree<T> {
             else folha.setFB( altura(folha.getEsq()) - altura(folha.getDir()) );
         }
 
-    }
-
-    int obterFB(No<T> arv){
-        if(arv == null)
-            return 0;
-        return altura(arv.getEsq()) - altura(arv.getDir());
     }
 
     private Boolean ehFolha(No<T> folha){
