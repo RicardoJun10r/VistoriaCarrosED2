@@ -39,12 +39,6 @@ public class Cliente {
     static void carregarCarros(IServer veiculoService) throws RemoteException{
 
         for(int i = 0; i < 50; i++){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
             String renavam = String.valueOf(i) + "0015468";
             veiculoService.adicionar(new Veiculo(renavam, "Kwid" + i, "Renault" + i, "QRT12" + i, LocalDate.now(), new Condutor("Roberto", "041646" + i)));
         }
